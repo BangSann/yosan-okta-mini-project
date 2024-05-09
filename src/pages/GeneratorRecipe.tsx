@@ -4,7 +4,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import stringSpliter from "../helper/stringSpliter";
 
 const GeneratorRecipe = () => {
-  const [recipeImage, setRecipeImage] = useState("");
+  const [recipeImage, setRecipeImage] = useState<any>();
   const [recipeResponse, setRecipeResponses] = useState("");
   const [isImage, setIsImage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -52,7 +52,7 @@ const GeneratorRecipe = () => {
   }
 
   return (
-    <section className="w-full flex justify-center mt-14">
+    <section className="w-full flex justify-center my-14">
       <div className="container p-2 flex flex-col gap-10">
         <div className="flex flex-col gap-3">
           <h1 className="text-4xl font-bold">
@@ -118,7 +118,7 @@ const GeneratorRecipe = () => {
                 {stringSpliter(recipeResponse).map((item, i) => {
                   if (item == "Ingredients:" || item == "Instructions:" || item == "Enjoy!") {
                     return (
-                      <h1 key={i} className="text-xl font-semibold my-4">
+                      <h1 key={i} className="text-2xl font-semibold my-4">
                         {item}
                       </h1>
                     );
