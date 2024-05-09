@@ -3,6 +3,7 @@ import bannerImage from "../../assets/banner-image.png";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
+import Swal from "sweetalert2";
 
 type Inputs = {
   email: string;
@@ -14,9 +15,13 @@ function handleLogin(data: any) {
     .then((userCredential: any) => {
       const user = userCredential;
       console.log(user);
+      
     })
-    .catch((error) => {
-      console.log(error.message);
+    .catch(() => {
+      Swal.fire({
+        icon: "error",
+        text: "Invalid Email or Password",
+      });
     });
 }
 
@@ -24,7 +29,6 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => handleLogin(data);

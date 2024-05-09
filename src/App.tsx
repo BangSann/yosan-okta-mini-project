@@ -7,18 +7,39 @@ import { useState } from "react";
 import SignUp from "./pages/register/signUp";
 import Navbar from "./componets/navbar";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
+import { db, auth } from "./firebase";
+import {  collection, getDocs, query, where } from "firebase/firestore";
+import Profile from "./pages/profile";
+import { useDispatch } from "react-redux";
+import { setUser } from "./slice/user.slice";
+import RecipesList from "./pages/recipes";
+import RecipeDetail from "./pages/recipes/recipe-detail";
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
+  
 
-  onAuthStateChanged(auth ,(user)=>{
+  const [isLogin, setIsLogin] = useState(false);
+  const userRef = collection(db, "users");
+  const dispatch = useDispatch();
+
+  onAuthStateChanged(auth, (user) => {
     if (user) {
-      setIsLogin(true)
-    }else{
-      setIsLogin(false)
+      getUser(user.uid);
+
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
     }
-  })
+  });
+  async function getUser(authID: string) {
+    const dataUsers = (await getDocs(
+      query(userRef, where("id", "==", authID))
+    )) as any;
+
+    dataUsers.forEach((doc: any) => {
+      dispatch(setUser(doc.data()));
+    });
+  }
 
   function PrivateRoute({ element }: { element: any }) {
     if (!isLogin) {
@@ -34,7 +55,7 @@ function App() {
           path="/"
           element={
             <>
-              <Navbar />
+              <Navbar isLogin={isLogin} />
               <Home />
             </>
           }
@@ -45,15 +66,52 @@ function App() {
             <PrivateRoute
               element={
                 <>
-                  <Navbar />
+                  <Navbar isLogin={isLogin} />
                   <GeneratorRecipe />
                 </>
               }
             />
           }
         />
-        <Route path="/login" element={isLogin ? <Navigate to={"/"}/> : <Login/>} />
-        <Route path="/sign-up" element={isLogin ? <Navigate to={"/"}/> : <SignUp/>} />
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute
+              element={
+                <>
+                  <Navbar isLogin={isLogin} />
+                  <Profile />
+                </>
+              }
+            />
+          }
+        />
+        <Route
+          path="/recipes-list"
+          element={
+            <>
+              <Navbar isLogin={isLogin} />
+              <RecipesList />
+            </>
+          }
+        />
+        <Route
+          path="/recipes-list/:recipeId"
+          element={
+            <>
+              <Navbar isLogin={isLogin} />
+              <RecipeDetail />
+            </>
+          }
+        />
+        <Route
+          path="/login"
+          element={isLogin ? <Navigate to={"/"} /> : <Login />}
+        />
+        <Route
+          path="/sign-up"
+          element={isLogin ? <Navigate to={"/"} /> : <SignUp />}
+        />
       </Routes>
     </BrowserRouter>
   );
