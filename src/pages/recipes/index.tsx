@@ -1,11 +1,4 @@
-import {
-  DocumentData,
-  Query,
-  collection,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../../firebase";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -140,9 +133,12 @@ const RecipesList = () => {
               ))}
             </select>
             <div className="flex">
-              <input type="text" className="px-4 py-2 rounded-s-3xl input input-bordered w-full max-w-xs rounded-e-none" />
+              <input
+                type="text"
+                className="px-4 py-2 rounded-s-3xl input input-bordered w-full max-w-xs rounded-e-none"
+              />
               <button className="btn rounded-s-none rounded-e-3xl px-4 py-2 bg-[#05FF00] font-bold text-white text-center">
-                <IoSearch className="text-xl"/>
+                <IoSearch className="text-xl" />
               </button>
             </div>
           </div>
