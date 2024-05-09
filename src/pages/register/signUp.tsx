@@ -61,11 +61,11 @@ const SignUp = () => {
         // console.log(userCredential.user.uid);
         handelDb(userCredential.user.uid, data);
       })
-      .catch((err) => {
+      .catch(() => {
         Swal.fire({
-          icon : "error",
-          text : "Email already used !"
-        })
+          icon: "error",
+          text: "Email already used !",
+        });
       });
   }
 
