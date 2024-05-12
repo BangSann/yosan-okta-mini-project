@@ -8,7 +8,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { db } from "../../firebase";
 import { useEffect, useState } from "react";
 import alt from "../../assets/profile-image.png";
