@@ -24,10 +24,9 @@ function App() {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       getUser(user.uid);
-      setIsLogin(true);
     } else {
-      setIsLogin(false);
       dispatch(setUser(""));
+      setIsLogin(false);
     }
   });
   async function getUser(authID: string) {
@@ -37,6 +36,7 @@ function App() {
 
     dataUsers.forEach((doc: any) => {
       dispatch(setUser(doc.data()));
+      setIsLogin(true);
     });
   }
 
@@ -111,7 +111,7 @@ function App() {
           element={
             <>
               <Navbar isLogin={isLogin} />
-              <RecipeDetail isLogin={isLogin}/>
+              <RecipeDetail isLogin={isLogin} />
             </>
           }
         />

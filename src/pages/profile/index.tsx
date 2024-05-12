@@ -63,7 +63,7 @@ const Profile = () => {
             <p className="underline text-lg px-2 cursor-pointer">
               {userData.email}
             </p>
-            <Link to={"./edit"} className="px-2 underline text-blue-600">
+            <Link to={`./edit?id=${userData.id}`} className="px-2 underline text-blue-600">
               Edit Profile
             </Link>
           </div>

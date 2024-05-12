@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import bannerImage from "../../assets/banner-image.png"
 import Categories from "./categories";
+import TopRecipes from "./topRecipes";
 
 const Home = () => {
   return (
@@ -23,6 +24,7 @@ const Home = () => {
         </div>
       </div>
       <Categories/>
+      <TopRecipes />
       <div className="h-[100vh]">
 
       </div>

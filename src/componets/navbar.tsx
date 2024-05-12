@@ -10,7 +10,7 @@ const Navbar = ({ isLogin }: { isLogin: boolean }) => {
     signOut(auth);
   }
   return (
-    <section className="flex justify-center sticky top-0 bg-white">
+    <section className="flex justify-center sticky top-0 bg-white z-50">
       <div className="container navbar bg-base-100">
         <div className="navbar-start">
           <div className="dropdown">
@@ -90,13 +90,22 @@ const Navbar = ({ isLogin }: { isLogin: boolean }) => {
         </div>
         <div className="navbar-end">
           <div className="dropdown">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn bg-[#05FF00] py-2 px-14 rounded-3xl text-[24px] font-semibold text-white hidden lg:flex"
-            >
-              {isLogin ? userData.name || "Account" : <Link to={"/login"}>Login</Link>}
-            </div>
+            {isLogin ? (
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn bg-[#05FF00] py-2 px-14 rounded-3xl text-[24px] font-semibold text-white hidden lg:flex"
+              >
+                {userData.name || "Account"}
+              </div>
+            ) : (
+              <Link
+                to={"/login"}
+                className="btn bg-[#05FF00] py-2 px-14 rounded-3xl text-[24px] font-semibold text-white hidden lg:flex"
+              >
+                Login
+              </Link>
+            )}
             {isLogin ? (
               <ul
                 tabIndex={0}
