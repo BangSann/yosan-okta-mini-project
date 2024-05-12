@@ -104,9 +104,9 @@ const GeneratorRecipe = () => {
                   setRecipeImage("");
                   setRecipeResponses("");
                 }}
-                className="btn w-full rounded-lg py-2 bg-red-400 text-[24px] font-semibold text-white"
+                className="btn w-full rounded-lg py-2 bg-red-600 text-[24px] font-semibold text-white"
               >
-                Drop Image
+                Reset
               </button>
             ) : (
               ""

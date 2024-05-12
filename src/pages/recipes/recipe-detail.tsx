@@ -8,7 +8,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { db } from "../../firebase";
 import { useEffect, useState } from "react";
 import alt from "../../assets/profile-image.png";
@@ -18,7 +18,7 @@ import { splitString } from "../../helper/spliterStringFunc";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
-const RecipeDetail = () => {
+const RecipeDetail = ({ isLogin }: { isLogin: boolean }) => {
   const [detailedRecipe, setDetailedRecipe] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [favoritedId, setFavoritedId] = useState("");
@@ -49,17 +49,24 @@ const RecipeDetail = () => {
   console.log(favoritedId);
 
   async function handleAddToFavorite() {
-    await addDoc(collection(db, "favorited_recipe"), {
-      user_id: user.id,
-      recipe_id: recipe_id,
-    }).then(() => {
+    if (!isLogin) {
       Swal.fire({
-        icon: "success",
-        text: "Successfuly add to favorite ",
+        icon : "warning",
+        text : "You must login first !!"
+      })
+    } else {
+      await addDoc(collection(db, "favorited_recipe"), {
+        user_id: user.id,
+        recipe_id: recipe_id,
+      }).then(() => {
+        Swal.fire({
+          icon: "success",
+          text: "Successfuly add to favorite ",
+        });
       });
-    });
 
-    getFavoritedId();
+      getFavoritedId();
+    }
   }
   async function handleUnFavorite() {
     await deleteDoc(doc(db, "favorited_recipe", favoritedId)).then(() => {
