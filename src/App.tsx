@@ -8,16 +8,15 @@ import SignUp from "./pages/register/signUp";
 import Navbar from "./componets/navbar";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "./firebase";
-import {  collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import Profile from "./pages/profile";
 import { useDispatch } from "react-redux";
 import { setUser } from "./slice/user.slice";
 import RecipesList from "./pages/recipes";
 import RecipeDetail from "./pages/recipes/recipe-detail";
+import EditProfile from "./pages/profile/EditProfile";
 
 function App() {
-  
-
   const [isLogin, setIsLogin] = useState(false);
   const userRef = collection(db, "users");
   const dispatch = useDispatch();
@@ -25,10 +24,10 @@ function App() {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       getUser(user.uid);
-
       setIsLogin(true);
     } else {
       setIsLogin(false);
+      dispatch(setUser(""));
     }
   });
   async function getUser(authID: string) {
@@ -87,6 +86,18 @@ function App() {
           }
         />
         <Route
+          path="/profile/edit"
+          element={
+            <PrivateRoute
+              element={
+                <>
+                  <EditProfile />
+                </>
+              }
+            />
+          }
+        />
+        <Route
           path="/recipes-list"
           element={
             <>
@@ -100,7 +111,7 @@ function App() {
           element={
             <>
               <Navbar isLogin={isLogin} />
-              <RecipeDetail />
+              <RecipeDetail isLogin={isLogin}/>
             </>
           }
         />

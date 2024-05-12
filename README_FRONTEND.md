@@ -10,8 +10,24 @@ Simpcook adalah sebuah website yang menyediakan berbagai macam resep makanan. Da
 4. Menampilkan detail resep makanan dari list resep makanan yang tersedia
 5. Menampilkan resep makanan berdasarkan categori yang tersedia
 
+## Tech Stacks
+1. VS Code
+2. Github
+3. Figma
+4. Firebase
+5. React ( vite )
+6. React Icon
+7. React Router DOM
+8. Tailwind
+9. Daisyui
+10. Typescript
+11. React Redux
+12. Sweet Alert 2
+13. Axios
+14. React Hook Form
+
 ## Live App Demo
-Link : 
+Link : https://yosan-okta-mini-project.vercel.app/
 
 ## Setup
 1. Lakukan install ( npm install ) setelah melakukan pull request repository ini.

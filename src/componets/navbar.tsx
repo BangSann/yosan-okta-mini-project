@@ -2,13 +2,15 @@ import { signOut } from "firebase/auth";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase";
 import { FaSignOutAlt } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const Navbar = ({ isLogin }: { isLogin: boolean }) => {
+  const userData = useSelector((state: any) => state.user.user);
   function handleLogout() {
     signOut(auth);
   }
   return (
-    <section className="flex justify-center sticky top-0">
+    <section className="flex justify-center sticky top-0 bg-white">
       <div className="container navbar bg-base-100">
         <div className="navbar-start">
           <div className="dropdown">
@@ -93,12 +95,12 @@ const Navbar = ({ isLogin }: { isLogin: boolean }) => {
               role="button"
               className="btn bg-[#05FF00] py-2 px-14 rounded-3xl text-[24px] font-semibold text-white hidden lg:flex"
             >
-              {isLogin ? "Account" : <Link to={"/login"}>Login</Link>}
+              {isLogin ? userData.name || "Account" : <Link to={"/login"}>Login</Link>}
             </div>
             {isLogin ? (
               <ul
                 tabIndex={0}
-                className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52 mt-2 text-lg"
+                className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52 mt-2 text-lg right-0"
               >
                 <li>
                   <Link to={"/profile"}>Profile</Link>

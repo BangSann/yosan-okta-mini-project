@@ -5,10 +5,10 @@ import { useRef, useState } from "react";
 import writeImageInCanvas from "../../helper/imageRenderer";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db, storage } from "../../firebase";
+import { auth, db } from "../../firebase";
 import { addDoc, collection } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Swal from "sweetalert2";
+import { uploadImage } from "../../helper/uploaderImage";
 
 type Inputs = {
   firstName: string;
@@ -22,20 +22,8 @@ type Inputs = {
 const SignUp = () => {
   const [profileImage, setProfileImage] = useState<any>();
 
-  async function uploadImage() {
-    if (profileImage) {
-      const storageRef = ref(storage, `/post/${profileImage.name}`);
-      await uploadBytes(storageRef, profileImage);
-      const imgUrl = await getDownloadURL(storageRef);
-
-      return imgUrl;
-    } else {
-      return "";
-    }
-  }
-
   async function handelDb(uid: string, data: any) {
-    await uploadImage().then(async (img) => {
+    await uploadImage(profileImage).then(async (img) => {
       console.log(img);
 
       await addDoc(collection(db, "users"), {
