@@ -1,4 +1,4 @@
-import Input from "./input";
+import Input from "../../componets/input";
 import profileImageAlt from "../../assets/profile-image.png";
 import { Link } from "react-router-dom";
 import { useRef, useState } from "react";
@@ -21,6 +21,7 @@ type Inputs = {
 
 const SignUp = () => {
   const [profileImage, setProfileImage] = useState<any>();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handelDb(uid: string, data: any) {
     await uploadImage(profileImage).then(async (img) => {
@@ -43,8 +44,9 @@ const SignUp = () => {
     });
   }
 
-  function handleSingUp(data: any) {
-    createUserWithEmailAndPassword(auth, data.email, data.password)
+  async function handleSingUp(data: any) {
+    setIsLoading(true);
+    await createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         // console.log(userCredential.user.uid);
         handelDb(userCredential.user.uid, data);
@@ -55,6 +57,7 @@ const SignUp = () => {
           text: "Email already used !",
         });
       });
+    setIsLoading(false);
   }
 
   const {
@@ -74,7 +77,7 @@ const SignUp = () => {
   password.current = watch("password", "");
 
   return (
-    <section className="w-full min-h-[100vh] flex flex-col justify-center items-center gap-12">
+    <section className="w-full min-h-[100vh] flex flex-col justify-center items-center gap-12 mb-10">
       <h1 className="font-bold text-6xl mt-14">Register</h1>
       <div className="grid grid-cols-5 w-[80%]">
         <div className="col-span-2 flex justify-center items-start p-10">
@@ -145,7 +148,7 @@ const SignUp = () => {
               }}
               error={errors.email?.message}
               childern="Email"
-              type="email"
+              type="text"
             />
             <Input
               register={{
@@ -189,8 +192,9 @@ const SignUp = () => {
               <button
                 type="submit"
                 className="btn py-3 px-16 text-2xl font-semibold text-white bg-[#05FF00] h-auto rounded-[30px]"
+                disabled={isLoading}
               >
-                Submit
+                {isLoading ? "Waiting" : "Submit"}
               </button>
             </div>
           </form>

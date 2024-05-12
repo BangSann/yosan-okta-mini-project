@@ -42,7 +42,7 @@ const Categories = () => {
 
   return (
     <section className="w-full bg-slate-100 flex flex-col items-center justify-center py-16 gap-12 my-36">
-      <h1 className="text-5xl">Categories</h1>
+      {/* <h1 className="text-5xl font-semibold">Categories</h1> */}
       <div className={`container p-2 grid grid-cols-6 gap-10`}>
         {categoriesList.map((item, i) => (
           <Link

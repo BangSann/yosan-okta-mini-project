@@ -4,34 +4,38 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import Swal from "sweetalert2";
+import { useState } from "react";
 
 type Inputs = {
   email: string;
   password: string;
 };
 
-function handleLogin(data: any) {
-  signInWithEmailAndPassword(auth, data.email, data.password)
-    .then((userCredential: any) => {
-      const user = userCredential;
-      console.log(user);
-      
-    })
-    .catch(() => {
-      Swal.fire({
-        icon: "error",
-        text: "Invalid Email or Password",
-      });
-    });
-}
-
 const Login = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
     // formState: { errors },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => handleLogin(data);
+
+  async function handleLogin(data: any) {
+    setIsLoading(true);
+    await signInWithEmailAndPassword(auth, data.email, data.password)
+      .then((userCredential: any) => {
+        const user = userCredential;
+        console.log(user);
+      })
+      .catch(() => {
+        Swal.fire({
+          icon: "error",
+          text: "Invalid Email or Password",
+        });
+      });
+
+    setIsLoading(false);
+  }
 
   return (
     <section className="grid grid-cols-2 h-[100vh]">
@@ -81,8 +85,9 @@ const Login = () => {
           <button
             type="submit"
             className="btn text-3xl text-white bg-[#FFD600] rounded-[30px] py-4 h-auto mt-5"
+            disabled={isLoading}
           >
-            Login
+            {isLoading ? "Waiting" : "Login"}
           </button>
         </form>
       </div>
