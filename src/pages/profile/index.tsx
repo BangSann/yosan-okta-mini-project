@@ -30,6 +30,7 @@ const Profile = () => {
   }
   async function getFavoritedRecipe() {
     setIsLoading(true);
+    setRecipeList("");
     const data = await getDocs(
       query(
         collection(db, "favorited_recipe"),
@@ -37,7 +38,6 @@ const Profile = () => {
       )
     );
 
-    setRecipeList("");
     data.forEach((doc: any) => {
      getRecipeList(doc.data().recipe_id);
     });
@@ -46,7 +46,7 @@ const Profile = () => {
 
   useEffect(() => {
     getFavoritedRecipe();
-  }, [userData]);
+  }, []);
   return (
     <section className="w-full flex justify-center">
       <div className="container p-2 mt-12 min-h-[calc(100vh-80px)]">
