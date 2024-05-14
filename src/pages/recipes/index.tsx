@@ -9,7 +9,6 @@ import { FaStar } from "react-icons/fa";
 
 const RecipesList = () => {
   const [recipeData, setRecipeData] = useState<any>([]);
-  console.log(recipeData);
   
   const [recipeNameInput, setRecipeNameInput] = useState("");
   const [pagination, setPagination] = useState<any>([]);

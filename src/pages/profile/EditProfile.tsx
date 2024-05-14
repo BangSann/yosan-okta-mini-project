@@ -37,6 +37,7 @@ const EditProfile = () => {
     newPassword: "",
     profileImg: dataUser.profileImg,
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const password = useRef({});
   const dispatch = useDispatch();
@@ -61,12 +62,12 @@ const EditProfile = () => {
   }
 
   async function handleEditData(data: any) {
+    setIsLoading(true);
     const datas = await getDocs(
       query(collection(db, "users"), where("id", "==", userEdited.id))
     );
 
     const imgUrl = await uploadImage(tempImg);
-    console.log(imgUrl);
 
     datas.forEach(async (doc: any) => {
       const docRef = doc.ref;
@@ -84,9 +85,11 @@ const EditProfile = () => {
             icon: "success",
             text: "Data Updated",
           });
-          navigate("/");
+          setIsLoading(false);
+          navigate("/profile");
         })
         .catch((err: any) => {
+          setIsLoading(false);
           alert(err);
         });
     });
@@ -105,9 +108,9 @@ const EditProfile = () => {
           {tempImg ? (
             <canvas
               id="editProfileImg"
-              width={300}
-              height={300}
-              className="rounded-[20px]"
+              width={200}
+              height={200}
+              className="rounded-full"
             ></canvas>
           ) : (
             <img
@@ -277,10 +280,16 @@ const EditProfile = () => {
           <button
             type="submit"
             className="btn text-3xl text-white bg-[#FFD600] rounded-[30px] py-4 h-auto mt-5 w-full"
+            disabled={isLoading}
           >
-            Change
+            {isLoading ? "Waiting" : "Change"}
           </button>
-          <p className="px-5 text-end w-full mt-2">Cancel updating profile? <Link to={"/profile"} className="underline text-blue-600">Back to profile</Link></p>
+          <p className="px-5 text-end w-full mt-2">
+            Cancel updating profile?{" "}
+            <Link to={"/profile"} className="underline text-blue-600">
+              Back to profile
+            </Link>
+          </p>
         </form>
       </div>
     </section>
