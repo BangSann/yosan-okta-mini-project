@@ -6,8 +6,9 @@ import { useSelector } from "react-redux";
 
 const Navbar = ({ isLogin }: { isLogin: boolean }) => {
   const userData = useSelector((state: any) => state.user.user);
-  function handleLogout() {
-    signOut(auth);
+  async function handleLogout() {
+    await signOut(auth);
+    location.reload();
   }
   return (
     <section className="flex justify-center sticky top-0 bg-white z-50">
@@ -51,10 +52,34 @@ const Navbar = ({ isLogin }: { isLogin: boolean }) => {
               <li>
                 <a>About</a>
               </li>
-              <li>
-                <button className="btn bg-[#05FF00] py-2 px-14 rounded-3xl text-lg font-semibold text-white mt-4">
-                  Login
-                </button>
+              <li className="flex ">
+              <a>{userData.name}</a>
+                {isLogin ? (
+                  <ul
+                    tabIndex={1}
+                    className="p-2 bg-base-100 rounded-box text-lg right-0"
+                  >
+                    <li>
+                      <Link to={"/profile"}>Profile</Link>
+                    </li>
+                    <li>
+                      <button
+                        onClick={handleLogout}
+                        className="text-red-600 font-semibold flex justify-between items-center"
+                      >
+                        Logout
+                        <FaSignOutAlt />
+                      </button>
+                    </li>
+                  </ul>
+                ) : (
+                  <Link
+                    to={"/login"}
+                    className="btn bg-[#05FF00] py-2 px-14 rounded-3xl text-lg font-semibold text-white mt-4"
+                  >
+                    Login
+                  </Link>
+                )}
               </li>
             </ul>
           </div>
@@ -89,7 +114,7 @@ const Navbar = ({ isLogin }: { isLogin: boolean }) => {
           </ul>
         </div>
         <div className="navbar-end">
-          <div className="dropdown">
+          <div className="dropdown ">
             {isLogin ? (
               <div
                 tabIndex={0}

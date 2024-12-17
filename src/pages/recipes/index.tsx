@@ -9,7 +9,7 @@ import { FaStar } from "react-icons/fa";
 
 const RecipesList = () => {
   const [recipeData, setRecipeData] = useState<any>([]);
-  
+
   const [recipeNameInput, setRecipeNameInput] = useState("");
   const [pagination, setPagination] = useState<any>([]);
   const [itemOfShow, setItemOfShow] = useState<{ start: number; end: number }>({
@@ -122,7 +122,7 @@ const RecipesList = () => {
       {isLoading ? (
         <span className="loading loading-spinner loading-lg " />
       ) : (
-        <div className="container p-2 flex flex-col gap-10 items-center my-16 min-h-[calc(100vh-80px)]">
+        <div className="container p-2 flex flex-col gap-10 items-center md:my-16 my-4 min-h-[calc(100vh-80px)]">
           <h1 className="text-4xl font-bold w-full">
             Find Your Happinest{" "}
             {categories || indexOfSearch ? (
@@ -133,9 +133,9 @@ const RecipesList = () => {
               ""
             )}
           </h1>
-          <div className="flex justify-between w-full">
+          <div className="grid md:grid-cols-12 grid-cols-1 w-full gap-2">
             <select
-              className="select btn text-start w-full max-w-xs rounded-3xl min-w-56 bg-[#05FF00] text-white transition"
+              className="select btn text-start w-full rounded-3xl bg-[#05FF00] text-white transition md:col-span-4"
               onChange={handleCategories}
             >
               {categoriesList.map((items, i) => (
@@ -148,10 +148,11 @@ const RecipesList = () => {
                 </option>
               ))}
             </select>
-            <div className="flex">
+            <div className="col-span-4 md:block hidden"></div>
+            <div className="flex md:col-span-4">
               <input
                 type="text"
-                className="px-4 py-2 rounded-s-3xl input input-bordered w-full max-w-xs rounded-e-none"
+                className="px-4 py-2 rounded-s-3xl input input-bordered w-full rounded-e-none"
                 onChange={(event) => setRecipeNameInput(event.target.value)}
                 placeholder="Type here"
               />
@@ -164,7 +165,7 @@ const RecipesList = () => {
             </div>
           </div>
           {recipeData ? (
-            <div className="grid grid-cols-4 gap-12">
+            <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-x-6 xl:gap-12 gap-x-2 gap-y-6">
               {recipeData.map((item: any, i: number) => {
                 if (i >= itemOfShow.start && i <= itemOfShow.end - 1) {
                   return (
@@ -173,17 +174,17 @@ const RecipesList = () => {
                       key={i}
                       className="flex flex-col gap-2 items-center justify-between hover:scale-105 rounded-lg transition w-full"
                     >
-                      <div className="h-[280px] flex items-center bg-slate-400 rounded-lg hover:shadow-xl">
+                      <div className="flex items-center bg-slate-400 rounded-lg hover:shadow-xl min-h-[200px] sm:min-h-[245px] lg:min-h-[298px] xl:min-h-[362px]">
                         <img
                           src={item.data.thumbnail_url}
                           alt=""
                           className="rounded-lg object-cover w-full h-full"
                         />
                       </div>
-                      <p className="text-xl font-semibold text-center">
+                      <p className="md:text-xl text-base font-semibold text-center">
                         {item.data.name}
                       </p>
-                      <div className="flex gap-5">
+                      <div className="flex gap-5 lg:text-base text-sm ">
                         <p className="flex gap-1 justify-center items-center">
                           <FaStar className="text-yellow-400" />
                           {subStrFunc(item.data.user_ratings)}
@@ -205,19 +206,53 @@ const RecipesList = () => {
             </div>
           )}
           <div className="join w-full flex justify-center mt-14">
-            {pagination.map((item: any, i: number) => (
-              <button
-                className={`join-item btn ${
-                  itemOfShow.end / 8 == item ? "bg-slate-500 text-white" : ""
-                }`}
-                key={i}
-                onClick={() =>
-                  setItemOfShow({ start: item * 8 - 8, end: item * 8 })
-                }
-              >
-                {item}
+            {itemOfShow.end / 8 > 2 ? (
+              <button className="join-item btn" onClick={()=>{setItemOfShow({start : 0 , end : 8})}}>1</button>
+            ) : (
+              ""
+            )}
+            {itemOfShow.end / 8 > 3 ? (
+              <button className="join-item btn disabled bg-transparent border-none">
+                ...
               </button>
-            ))}
+            ) : (
+              ""
+            )}
+            {pagination.map((item: any, i: number) => {
+              if (
+                itemOfShow.end / 8 == item ||
+                itemOfShow.end / 8 == item - 1 ||
+                itemOfShow.end / 8 == item + 1
+              ) {
+                return (
+                  <button
+                    className={`join-item btn ${
+                      itemOfShow.end / 8 == item
+                        ? "bg-slate-500 text-white"
+                        : ""
+                    }`}
+                    key={i}
+                    onClick={() =>
+                      setItemOfShow({ start: item * 8 - 8, end: item * 8 })
+                    }
+                  >
+                    {item}
+                  </button>
+                );
+              }
+            })}
+            {itemOfShow.end / 8 < paginationLength() - 2 ? (
+              <button className="join-item btn disabled bg-transparent border-none">
+                ...
+              </button>
+            ) : (
+              ""
+            )}
+            {itemOfShow.end / 8 < paginationLength() - 1 ? (
+              <button className="join-item btn" onClick={()=>{setItemOfShow({start :  paginationLength() * 8 - 8, end : paginationLength() * 8})}}>15</button>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       )}

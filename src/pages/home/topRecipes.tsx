@@ -33,29 +33,29 @@ const TopRecipes = () => {
   return (
     <section className="container p-2 flex flex-col justify-center items-center">
       <h1 className="text-5xl mb-32">Top Recipes</h1>
-      <div className="w-[80%] flex flex-col gap-12">
+      <div className="xl:w-[80%] flex flex-col gap-12 px-5">
         {topRecipes.map((items: any, i: number) => {
           if (i !== 1) {
             return (
-              <div key={i} className="grid grid-cols-5 gap-5 h-auto">
-                <div className="col-span-2">
+              <div key={i} className="grid md:grid-cols-5 grid-cols-1 gap-5 h-auto">
+                <div className="md:col-span-2">
                   <img
                     src={items.data.thumbnail_url}
                     alt="recipe image"
                     className="w-full rounded-3xl"
                   />
                 </div>
-                <div className="col-span-3 py-5 pe-5 flex flex-col gap-5 w-full relative">
+                <div className="md:col-span-3 xl:py-5 flex flex-col gap-5 w-full relative">
                   <Link
                     to={`/recipes-list/${items.id}`}
-                    className="text-5xl font-semibold"
+                    className="xl:text-5xl lg:text-3xl text-3xl font-semibold text-center md:text-start"
                   >
                     {items.data.name}
                   </Link>
-                  <p className="text-base font-light text-justify">
+                  <p className="lg:text-base text-sm font-light text-justify">
                     {items.data.description}
                   </p>
-                  <div className="flex gap-5 text-2xl absolute bottom-5">
+                  <div className="flex gap-5 lg:text-2xl text-xl lg:absolute bottom-5 w-full justify-center md:justify-start">
                     <p>
                       <b>{items.data.num_servings}</b> servings
                     </p>
@@ -69,18 +69,25 @@ const TopRecipes = () => {
             );
           } else {
             return (
-              <div key={i} className="grid grid-cols-5 gap-5 h-auto relative">
-                <div className="col-span-3 py-5 ps-5 flex flex-col gap-5 w-full">
+              <div key={i} className="grid md:grid-cols-5 grid-cols-1 gap-5 h-auto relative">
+                <div className="md:col-span-2 md:hidden">
+                  <img
+                    src={items.data.thumbnail_url}
+                    alt="recipe image"
+                    className="w-full rounded-3xl"
+                  />
+                </div>
+                <div className="md:col-span-3 xl:py-5 flex flex-col gap-5 w-full">
                   <Link
                     to={`/recipes-list/${items.id}`}
-                    className="text-5xl font-semibold"
+                    className="xl:text-5xl lg:text-3xl text-3xl font-semibold text-center md:text-start"
                   >
                     {items.data.name}
                   </Link>
-                  <p className="text-base font-light text-justify">
+                  <p className="lg:text-base text-sm font-light text-justify ">
                     {items.data.description}
                   </p>
-                  <div className="flex gap-5 text-2xl absolute bottom-5">
+                  <div className="flex gap-5 lg:text-2xl text-xl lg:absolute bottom-5 w-full justify-center md:justify-start">
                     <p>
                       <b>{items.data.num_servings}</b> servings
                     </p>
@@ -90,7 +97,7 @@ const TopRecipes = () => {
                     </p>
                   </div>
                 </div>
-                <div className="col-span-2">
+                <div className="md:col-span-2 hidden md:block">
                   <img
                     src={items.data.thumbnail_url}
                     alt="recipe image"

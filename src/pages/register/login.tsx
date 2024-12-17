@@ -38,8 +38,8 @@ const Login = () => {
   }
 
   return (
-    <section className="grid grid-cols-2 h-[100vh]">
-      <div className="flex justify-center items-center">
+    <section className="grid lg:grid-cols-2 grid-cols-1 h-[100vh]">
+      <div className="lg:flex justify-center items-center hidden">
         <div className="text-center">
           <img src={bannerImage} alt="banner-image" />
           <h1 className="text-8xl font-bold">
@@ -51,21 +51,21 @@ const Login = () => {
         <h1 className="text-6xl font-bold text-white mb-14">Login</h1>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-[60%] flex flex-col gap-5"
+          className="md:w-[60%] w-[80%] flex flex-col gap-5"
         >
           <div className="flex flex-col gap-2 w-full">
-            <label className="font-bold text-2xl text-white px-5">Email</label>
+            <label className="font-bold md:text-2xl text-base text-white px-5">Email</label>
             <input
               {...register("email", {
                 required: { value: true, message: "Please input an email" },
               })}
               type="email"
               placeholder="Type your email...."
-              className="px-6 p-4 rounded-[30px] text-xl"
+              className="px-6 p-4 rounded-[30px] md:text-xl text-base"
             />
           </div>
           <div className="flex flex-col gap-2 w-full">
-            <label className="font-bold text-2xl text-white px-5">
+            <label className="font-bold md:text-2xl text-base text-white px-5">
               Password
             </label>
             <input
@@ -76,7 +76,7 @@ const Login = () => {
               className="px-6 p-4 rounded-[30px] text-xl"
             />
           </div>
-          <p className="px-5 font-semibold text-xl text-end text-white">
+          <p className="md:px-5 font-semibold xl:text-xl md:text-base text-sm md:text-end text-center text-white">
             Don`t have an account ?{" "}
             <Link to={"/sign-up"} className="underline text-blue-600">
               Sign Up

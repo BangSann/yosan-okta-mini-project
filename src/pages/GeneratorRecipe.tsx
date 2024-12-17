@@ -52,7 +52,7 @@ const GeneratorRecipe = () => {
   }
 
   return (
-    <section className="w-full flex justify-center my-14">
+    <section className="w-full flex justify-center md:my-14 my-6">
       <div className="container p-2 flex flex-col gap-10">
         <div className="flex flex-col gap-3">
           <h1 className="text-4xl font-bold">
@@ -75,7 +75,7 @@ const GeneratorRecipe = () => {
             <div className=" lg:w-[400px] h-[400px] w-full ">
               <canvas
                 id="canvasRecipeImage"
-                className={`${!isImage ? "hidden" : ""} w-full h-full`}
+                className={`${!isImage ? "hidden" : ""} w-full h-full object-cover rounded-lg`}
               ></canvas>
               <button
                 onClick={() =>
@@ -134,7 +134,7 @@ const GeneratorRecipe = () => {
                 })}
               </div>
             ) : (
-              <div className="bg-slate-200 w-full min-h-[100vh] flex items-center justify-center text-2xl font-semibold text-white rounded-lg">
+              <div className="bg-slate-200 w-full min-h-[100vh] flex items-center justify-center text-2xl font-semibold text-white rounded-lg text-center">
                 {isLoading ? (
                   <span className="loading loading-spinner loading-lg"></span>
                 ) : (
