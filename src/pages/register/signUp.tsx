@@ -79,8 +79,8 @@ const SignUp = () => {
   return (
     <section className="w-full min-h-[100vh] flex flex-col justify-center items-center gap-12 mb-10">
       <h1 className="font-bold text-6xl mt-14">Register</h1>
-      <div className="grid grid-cols-5 w-[80%]">
-        <div className="col-span-2 flex justify-center items-start p-10">
+      <div className="grid lg:grid-cols-5 grid-cols-1 md:w-[80%] w-[90%]">
+        <div className="lg:col-span-2 flex justify-center items-start p-10">
           <div className="flex flex-col gap-7">
             <input
               type="file"
@@ -106,13 +106,13 @@ const SignUp = () => {
             </button>
           </div>
         </div>
-        <div className="col-span-3 p-2 ps-8">
+        <div className="lg:col-span-3 p-2 xl:ps-8">
           <form
             action=""
             className="flex flex-col gap-3"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div className="grid grid-cols-2 gap-10">
+            <div className="grid md:grid-cols-2 grid-cols-1 md:gap-10 gap-3">
               <Input
                 register={{
                   ...register("firstName", {
@@ -179,8 +179,15 @@ const SignUp = () => {
               childern="Confirm Password"
               type="password"
             />
-            <div className="flex items-center gap-5 justify-end mt-12">
-              <p className="text-xl font-light">
+            <div className="md:flex md:flex-row-reverse items-center gap-5 justify-start mt-12">
+              <button
+                type="submit"
+                className="btn py-3 px-16 text-2xl font-semibold text-white bg-[#05FF00] h-auto rounded-[30px] w-full md:w-auto"
+                disabled={isLoading}
+              >
+                {isLoading ? "Waiting" : "Submit"}
+              </button>
+              <p className="text-xl font-light text-center mt-2 md:mt-0">
                 Already have an account ?{" "}
                 <Link
                   to={"/login"}
@@ -189,13 +196,6 @@ const SignUp = () => {
                   Login
                 </Link>
               </p>
-              <button
-                type="submit"
-                className="btn py-3 px-16 text-2xl font-semibold text-white bg-[#05FF00] h-auto rounded-[30px]"
-                disabled={isLoading}
-              >
-                {isLoading ? "Waiting" : "Submit"}
-              </button>
             </div>
           </form>
         </div>

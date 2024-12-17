@@ -29,9 +29,9 @@ const Categories = () => {
       logo: vegetarian_logo,
     },
     {
-        slug: "seafood",
-        display: "Seafood",
-        logo: seafood_logo,
+      slug: "seafood",
+      display: "Seafood",
+      logo: seafood_logo,
     },
     {
       slug: "desserts",
@@ -42,16 +42,23 @@ const Categories = () => {
 
   return (
     <section className="w-full bg-slate-100 flex flex-col items-center justify-center py-16 gap-12 my-36">
-      {/* <h1 className="text-5xl font-semibold">Categories</h1> */}
-      <div className={`container p-2 grid grid-cols-6 gap-10`}>
+      <div className={`container p-2 grid md:grid-cols-6 grid-cols-1 gap-10`}>
         {categoriesList.map((item, i) => (
           <Link
             to={`/recipes-list?categories=${item.slug}`}
             key={i}
-            className="flex flex-col gap-2 justify-center items-center hover:scale-105"
+            className="grid md:grid-cols-1 grid-cols-2 justify-center items-center hover:scale-105 gap-4"
           >
-            <img src={item.logo} alt="logo" className="h-3/5"/>
-            <div className="text-2xl font-light">{item.display}</div>
+            <div className="w-full flex justify-center items-center">
+              <img
+                src={item.logo}
+                alt="logo"
+                className="w-3/5 md:min-h-[50px] lg:min-h-[70px] xl:min-h-[100px] object-center"
+              />
+            </div>
+            <div className="text-2xl font-light md:text-center">
+              {item.display}
+            </div>
           </Link>
         ))}
       </div>

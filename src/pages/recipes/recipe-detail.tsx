@@ -51,9 +51,9 @@ const RecipeDetail = ({ isLogin }: { isLogin: boolean }) => {
   async function handleAddToFavorite() {
     if (!isLogin) {
       Swal.fire({
-        icon : "warning",
-        text : "You must login first !!"
-      })
+        icon: "warning",
+        text: "You must login first !!",
+      });
     } else {
       await addDoc(collection(db, "favorited_recipe"), {
         user_id: user.id,
@@ -69,13 +69,20 @@ const RecipeDetail = ({ isLogin }: { isLogin: boolean }) => {
     }
   }
   async function handleUnFavorite() {
-    await deleteDoc(doc(db, "favorited_recipe", favoritedId)).then(() => {
-      setFavoritedId("");
+    if (!isLogin) {
       Swal.fire({
         icon: "warning",
-        text: "Deleted from favorite",
+        text: "You must login first !!",
       });
-    });
+    } else {
+      await deleteDoc(doc(db, "favorited_recipe", favoritedId)).then(() => {
+        setFavoritedId("");
+        Swal.fire({
+          icon: "warning",
+          text: "Deleted from favorite",
+        });
+      });
+    }
   }
   // dummy
 
@@ -94,14 +101,14 @@ const RecipeDetail = ({ isLogin }: { isLogin: boolean }) => {
       {isLoading ? (
         <span className="loading loading-spinner loading-lg h-[calc(100vh-80px)]" />
       ) : (
-        <div className="container p-2 grid grid-cols-3 gap-10 my-16">
-          <div className="col-span-1 rounded-lg relative">
+        <div className="container p-2 grid lg:grid-cols-3 grid-cols-1 gap-10 md:my-16 my-6">
+          <div className="lg:col-span-1 rounded-lg relative">
             <img
               src={detailedRecipe.thumbnail_url || alt}
               className="rounded-lg object-cover w-full"
             />
           </div>
-          <div className="col-span-2 flex flex-col gap-5">
+          <div className="lg:col-span-2 flex flex-col gap-5">
             <div className="flex justify-between items-start">
               <h1 className="text-4xl font-semibold">{detailedRecipe.name}</h1>
               {favoritedId ? (
@@ -113,7 +120,7 @@ const RecipeDetail = ({ isLogin }: { isLogin: boolean }) => {
                 </button>
               ) : (
                 <button
-                  className="btn bg-transparent border-none hover:bg-transparent"
+                  className="btn bg-transparent border-none hover:bg-transparent px-0 md:px-2"
                   onClick={handleAddToFavorite}
                 >
                   <MdFavoriteBorder className=" text-4xl text-red-500 cursor-pointer" />
